@@ -7,13 +7,13 @@ class Field
     private mixed $key;
     private mixed $value;
 
-    public function __construct($key, $value)
+    public function __construct(mixed $key, mixed $value)
     {
         $this->key = $key;
         $this->value = $value;
     }
 
-    public function setKey($key)
+    public function setKey(mixed $key)
     {
         $this->key = $key;
     }
@@ -23,7 +23,7 @@ class Field
         return $this->key;
     }
 
-    public function setValue($value)
+    public function setValue(mixed $value)
     {
         $this->value = $value;
     }
