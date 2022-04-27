@@ -7,6 +7,7 @@ use Generator;
 class CSVReader
 {
     private const CHUNK_LENGTH = 3;
+    private const SEPARATOR = ';';
     private $file;
     private array $columns;
     private int $countOfColumns;
@@ -38,7 +39,7 @@ class CSVReader
 
     public function readSingleRow(): array
     {
-        return fgetcsv($this->file, null, ';');
+        return fgetcsv($this->file, null, self::SEPARATOR);
     }
 
     public function rows(): Generator
@@ -65,7 +66,7 @@ class CSVReader
             $count = 0;
             $chunk = [];
             while ($count < self::CHUNK_LENGTH && !feof($this->file)) {
-                $rowInArray = fgetcsv($this->file, null, ';');
+                $rowInArray = fgetcsv($this->file, null, self::SEPARATOR);
                 $row = new Row();
                 for ($i = 0; $i < $this->countOfColumns; $i++) {
                     $field = new Field($this->getColumns($i), $rowInArray[$i]);
