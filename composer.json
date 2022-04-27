@@ -1,0 +1,17 @@
+{
+    "name": "shvarev/step1",
+    "description": "csv reader",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "src\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "shvarev",
+            "email": "v.m.shvarev@yandex.ru"
+        }
+    ],
+    "require": {}
+}
