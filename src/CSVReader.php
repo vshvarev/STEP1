@@ -4,7 +4,7 @@ namespace src;
 
 class CSVReader
 {
-    const LENGTH_CHUNK = 3;
+    const CHUNK_LENGTH = 3;
     protected $file;
     protected $columns = [];
     protected $countOfColumns;
@@ -62,7 +62,7 @@ class CSVReader
         while (!feof($this->file)) {
             $count = 0;
             $chunk = [];
-            while ($count < self::LENGTH_CHUNK && !feof($this->file)) {
+            while ($count < self::CHUNK_LENGTH && !feof($this->file)) {
                 $rowInArray = fgetcsv($this->file, null, ';');
                 $row = new Row();
                 for ($i = 0; $i < $this->countOfColumns; $i++) {
