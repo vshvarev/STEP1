@@ -4,8 +4,8 @@ namespace src;
 
 class Field
 {
-    public mixed $key;
-    public mixed $value;
+    private mixed $key;
+    private mixed $value;
 
     public function __construct($key, $value)
     {
@@ -18,8 +18,18 @@ class Field
         $this->key = $key;
     }
 
+    public function getKey(): mixed
+    {
+        return $this->key;
+    }
+
     public function setValue($value)
     {
         $this->value = $value;
+    }
+
+    public function getValue(): mixed
+    {
+        return $this->value;
     }
 }

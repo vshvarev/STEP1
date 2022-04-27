@@ -4,10 +4,15 @@ namespace src;
 
 class Row
 {
-    public array $fields;
+    private array $fields;
 
     public function setField(Field $field)
     {
         $this->fields[] = $field;
+    }
+
+    public function getField($id): Field
+    {
+        return $this->fields[$id];
     }
 }
