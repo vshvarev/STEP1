@@ -63,9 +63,9 @@ class CSVReader
         $this->setColumns();
         $this->setCountOfColumns();
         while (!feof($this->file)) {
-            $count = 0;
+            $counter = 0;
             $chunk = [];
-            while ($count < self::CHUNK_LENGTH && !feof($this->file)) {
+            while ($counter < self::CHUNK_LENGTH && !feof($this->file)) {
                 $rowInArray = fgetcsv($this->file, null, self::SEPARATOR);
                 $row = new Row();
                 for ($i = 0; $i < $this->countOfColumns; $i++) {
@@ -73,7 +73,7 @@ class CSVReader
                     $row->setField($field);
                 }
                 $chunk[] = $row;
-                $count++;
+                $counter++;
             }
             yield $chunk;
         }
