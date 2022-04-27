@@ -11,7 +11,7 @@ class Row
         $this->fields[] = $field;
     }
 
-    public function getField($id): Field
+    public function getField(int $id): Field
     {
         return $this->fields[$id];
     }
