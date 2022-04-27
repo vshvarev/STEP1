@@ -17,31 +17,6 @@ class CSVReader
         $this->file = fopen($filePath, 'r');
     }
 
-    public function closeForRead()
-    {
-        fclose($this->file);
-    }
-
-    public function setColumns()
-    {
-        $this->columns = $this->readSingleRow();
-    }
-
-    public function getColumns(int $id)
-    {
-        return $this->columns[$id];
-    }
-
-    public function setCountOfColumns()
-    {
-        $this->countOfColumns = count($this->columns);
-    }
-
-    public function readSingleRow(): array
-    {
-        return fgetcsv($this->file, null, self::SEPARATOR);
-    }
-
     public function rows(): Generator
     {
         $this->setColumns();
@@ -78,5 +53,30 @@ class CSVReader
             yield $chunk;
         }
         $this->closeForRead();
+    }
+
+    public function setColumns()
+    {
+        $this->columns = $this->readSingleRow();
+    }
+
+    public function getColumns(int $id)
+    {
+        return $this->columns[$id];
+    }
+
+    public function setCountOfColumns()
+    {
+        $this->countOfColumns = count($this->columns);
+    }
+
+    public function readSingleRow(): array
+    {
+        return fgetcsv($this->file, null, self::SEPARATOR);
+    }
+
+    public function closeForRead()
+    {
+        fclose($this->file);
     }
 }
