@@ -2,14 +2,16 @@
 
 namespace src;
 
+use Generator;
+
 class CSVReader
 {
-    const CHUNK_LENGTH = 3;
-    protected $file;
-    protected $columns = [];
-    protected $countOfColumns;
+    private const CHUNK_LENGTH = 3;
+    private $file;
+    private array $columns;
+    private int $countOfColumns;
 
-    public function __construct($filePath)
+    public function __construct(string $filePath)
     {
         $this->file = fopen($filePath, 'r');
     }
@@ -34,12 +36,12 @@ class CSVReader
         $this->countOfColumns = count($this->columns);
     }
 
-    public function readSingleRow()
+    public function readSingleRow(): array
     {
         return fgetcsv($this->file, null, ';');
     }
 
-    public function rows()
+    public function rows(): Generator
     {
         $this->setColumns();
         $this->setCountOfColumns();
@@ -55,7 +57,7 @@ class CSVReader
         $this->closeForRead();
     }
 
-    public function chunks()
+    public function chunks(): Generator
     {
         $this->setColumns();
         $this->setCountOfColumns();
