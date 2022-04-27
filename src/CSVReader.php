@@ -26,7 +26,7 @@ class CSVReader
         $this->columns = $this->readSingleRow();
     }
 
-    public function getColumns($id)
+    public function getColumns(int $id)
     {
         return $this->columns[$id];
     }
