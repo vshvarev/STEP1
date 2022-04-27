@@ -2,9 +2,6 @@
 
 namespace src;
 
-use src\Field;
-use src\Row;
-
 class CSVReader
 {
     const LENGTH_CHUNK = 3;
@@ -50,9 +47,7 @@ class CSVReader
             $rowInArray = $this->readSingleRow();
             $row = new Row();
             for ($i = 0; $i < $this->countOfColumns; $i++) {
-                $field = new Field();
-                $field->setKey($this->getColumns($i));
-                $field->setValue($rowInArray[$i]);
+                $field = new Field($this->getColumns($i), $rowInArray[$i]);
                 $row->setField($field);
             }
             yield $row;
@@ -71,9 +66,7 @@ class CSVReader
                 $rowInArray = fgetcsv($this->file, null, ';');
                 $row = new Row();
                 for ($i = 0; $i < $this->countOfColumns; $i++) {
-                    $field = new Field();
-                    $field->setKey($this->getColumns($i));
-                    $field->setValue($rowInArray[$i]);
+                    $field = new Field($this->getColumns($i), $rowInArray[$i]);
                     $row->setField($field);
                 }
                 $chunk[] = $row;
