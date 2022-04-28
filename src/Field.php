@@ -4,7 +4,7 @@ namespace src;
 
 final class Field
 {
-    private mixed $header;
+    private string $header;
     private mixed $value;
 
     public function __construct(mixed $key, mixed $value)
