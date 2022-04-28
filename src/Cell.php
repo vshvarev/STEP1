@@ -2,7 +2,7 @@
 
 namespace src;
 
-final class Field
+final class Cell
 {
     private string $header;
     private mixed $value;

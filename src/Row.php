@@ -4,15 +4,15 @@ namespace src;
 
 final class Row
 {
-    private array $fields;
+    private array $cells;
 
-    public function addField(Field $field): void
+    public function addCell(Cell $cell): void
     {
-        $this->fields[] = $field;
+        $this->cells[] = $cell;
     }
 
-    public function getField(int $id): Field
+    public function getCell(int $id): Cell
     {
-        return $this->fields[$id];
+        return $this->cells[$id];
     }
 }

@@ -20,8 +20,8 @@ final class CSVReader
             $row = new Row();
 
             for ($i = 0; $i < $countOfHeaders; $i++) {
-                $field = new Field($headers[$i], $rowInArray[$i]);
-                $row->addField($field);
+                $field = new Cell($headers[$i], $rowInArray[$i]);
+                $row->addCell($field);
             }
 
             yield $row;
@@ -44,8 +44,8 @@ final class CSVReader
                 $row = new Row();
 
                 for ($i = 0; $i < $countOfHeaders; $i++) {
-                    $field = new Field($headers[$i], $rowInArray[$i]);
-                    $row->addField($field);
+                    $field = new Cell($headers[$i], $rowInArray[$i]);
+                    $row->addCell($field);
                 }
 
                 $chunk[] = $row;
