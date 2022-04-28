@@ -6,7 +6,7 @@ final class Row
 {
     private array $fields;
 
-    public function setField(Field $field)
+    public function addField(Field $field)
     {
         $this->fields[] = $field;
     }
