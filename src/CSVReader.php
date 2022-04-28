@@ -4,7 +4,7 @@ namespace src;
 
 use Generator;
 
-class CSVReader
+final class CSVReader
 {
     private const CHUNK_LENGTH = 3;
     private const SEPARATOR = ';';

@@ -2,7 +2,7 @@
 
 namespace src;
 
-class Field
+final class Field
 {
     private mixed $key;
     private mixed $value;

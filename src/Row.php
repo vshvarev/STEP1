@@ -2,7 +2,7 @@
 
 namespace src;
 
-class Row
+final class Row
 {
     private array $fields;
 

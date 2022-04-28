@@ -6,7 +6,6 @@ use src\CSVReader;
 
 $csv = new CSVReader('../test.csv');
 
-
 foreach ($csv->chunks() as $chunk) {
     var_dump($chunk);
 }
