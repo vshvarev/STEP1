@@ -21,13 +21,16 @@ final class CSVReader
     {
         $this->setColumns();
         $this->setCountOfColumns();
+
         while (!feof($this->file)) {
             $rowInArray = $this->readSingleRow();
             $row = new Row();
+
             for ($i = 0; $i < $this->countOfColumns; $i++) {
                 $field = new Field($this->getColumns($i), $rowInArray[$i]);
                 $row->setField($field);
             }
+
             yield $row;
         }
         $this->closeForRead();
@@ -37,19 +40,24 @@ final class CSVReader
     {
         $this->setColumns();
         $this->setCountOfColumns();
+
         while (!feof($this->file)) {
             $counter = 0;
             $chunk = [];
+
             while ($counter < self::CHUNK_LENGTH && !feof($this->file)) {
                 $rowInArray = fgetcsv($this->file, null, self::SEPARATOR);
                 $row = new Row();
+
                 for ($i = 0; $i < $this->countOfColumns; $i++) {
                     $field = new Field($this->getColumns($i), $rowInArray[$i]);
                     $row->setField($field);
                 }
+
                 $chunk[] = $row;
                 $counter++;
             }
+
             yield $chunk;
         }
         $this->closeForRead();
