@@ -34,11 +34,13 @@ final class CSVReader
 
         foreach ($this->getRows($filePath) as $row) {
             $chunk[] = $row;
+
             if (count($chunk) >= $chunkSize) {
                 yield $chunk;
                 $chunk = [];
             }
         }
+
         yield $chunk;
     }
 
