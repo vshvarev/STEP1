@@ -7,10 +7,11 @@ use Generator;
 final class CSVReader
 {
     private const SEPARATOR = ';';
+    private const DEFAULT_CHUNK_SIZE = 50;
 
     public function getRows(string $filePath): Generator
     {
-        $file = $this->openFile($filePath);
+        $file = self::openFile($filePath);
         $headers = $this->updateHeaders($file);
 
         while ($this->endOfFileNotReached($file)) {
@@ -28,13 +29,17 @@ final class CSVReader
 
     public function getChunks(string $filePath, $chunkSize): Generator
     {
+        $chunkSize = self::validateChunkSize($chunkSize);
+        $chunk = [];
+
         foreach ($this->getRows($filePath) as $row) {
-            $chunk = [];
-            while (count($chunk) < $chunkSize) {
-                $chunk[] = $row;
+            $chunk[] = $row;
+            if (count($chunk) >= $chunkSize) {
+                yield $chunk;
+                $chunk = [];
             }
-            yield $chunk;
         }
+        yield $chunk;
     }
 
     /**
@@ -75,5 +80,14 @@ final class CSVReader
     private static function closeForRead($file): void
     {
         fclose($file);
+    }
+
+    private static function validateChunkSize(int $chunkSize): int
+    {
+        if ($chunkSize < 1 || $chunkSize > 10000) {
+            $chunkSize = self::DEFAULT_CHUNK_SIZE;
+        }
+
+        return $chunkSize;
     }
 }

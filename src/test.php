@@ -6,7 +6,7 @@ use src\CSVReader;
 
 $csv = new CSVReader();
 
-foreach ($csv->getRows('../test.csv') as $chunk) {
+foreach ($csv->getChunks('../test.csv', -1) as $chunk) {
     var_dump($chunk);
 }
 
