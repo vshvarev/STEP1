@@ -7,13 +7,13 @@ final class Cell
     private string $header;
     private mixed $value;
 
-    public function __construct(mixed $key, mixed $value)
+    public function __construct(string $header, mixed $value)
     {
-        $this->header = $key;
+        $this->header = $header;
         $this->value = $value;
     }
 
-    public function getHeader(): mixed
+    public function getHeader(): string
     {
         return $this->header;
     }
