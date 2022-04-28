@@ -19,8 +19,8 @@ final class CSVReader
 
     public function rows(): Generator
     {
-        $this->setHeaders();
-        $this->setCountOfHeaders();
+        $this->updateHeaders();
+        $this->updateCountOfHeaders();
 
         while (!feof($this->file)) {
             $rowInArray = $this->readSingleRow();
@@ -38,8 +38,8 @@ final class CSVReader
 
     public function chunks(): Generator
     {
-        $this->setHeaders();
-        $this->setCountOfHeaders();
+        $this->updateHeaders();
+        $this->updateCountOfHeaders();
 
         while (!feof($this->file)) {
             $counter = 0;
@@ -63,7 +63,7 @@ final class CSVReader
         $this->closeForRead();
     }
 
-    private function setHeaders()
+    private function updateHeaders()
     {
         $this->headers = $this->readSingleRow();
     }
@@ -73,7 +73,7 @@ final class CSVReader
         return $this->headers[$id];
     }
 
-    private function setCountOfHeaders()
+    private function updateCountOfHeaders()
     {
         $this->countOfHeaders = count($this->headers);
     }
