@@ -9,8 +9,8 @@ final class CSVReader
     private const CHUNK_LENGTH = 3;
     private const SEPARATOR = ';';
     private $file;
-    private array $columns;
-    private int $countOfColumns;
+    private array $headers;
+    private int $countOfHeaders;
 
     public function __construct(string $filePath)
     {
@@ -19,15 +19,15 @@ final class CSVReader
 
     public function rows(): Generator
     {
-        $this->setColumns();
-        $this->setCountOfColumns();
+        $this->setHeaders();
+        $this->setCountOfHeaders();
 
         while (!feof($this->file)) {
             $rowInArray = $this->readSingleRow();
             $row = new Row();
 
-            for ($i = 0; $i < $this->countOfColumns; $i++) {
-                $field = new Field($this->getColumns($i), $rowInArray[$i]);
+            for ($i = 0; $i < $this->countOfHeaders; $i++) {
+                $field = new Field($this->getHeaders($i), $rowInArray[$i]);
                 $row->setField($field);
             }
 
@@ -38,8 +38,8 @@ final class CSVReader
 
     public function chunks(): Generator
     {
-        $this->setColumns();
-        $this->setCountOfColumns();
+        $this->setHeaders();
+        $this->setCountOfHeaders();
 
         while (!feof($this->file)) {
             $counter = 0;
@@ -49,8 +49,8 @@ final class CSVReader
                 $rowInArray = fgetcsv($this->file, null, self::SEPARATOR);
                 $row = new Row();
 
-                for ($i = 0; $i < $this->countOfColumns; $i++) {
-                    $field = new Field($this->getColumns($i), $rowInArray[$i]);
+                for ($i = 0; $i < $this->countOfHeaders; $i++) {
+                    $field = new Field($this->getHeaders($i), $rowInArray[$i]);
                     $row->setField($field);
                 }
 
@@ -63,19 +63,19 @@ final class CSVReader
         $this->closeForRead();
     }
 
-    private function setColumns()
+    private function setHeaders()
     {
-        $this->columns = $this->readSingleRow();
+        $this->headers = $this->readSingleRow();
     }
 
-    private function getColumns(int $id)
+    private function getHeaders(int $id)
     {
-        return $this->columns[$id];
+        return $this->headers[$id];
     }
 
-    private function setCountOfColumns()
+    private function setCountOfHeaders()
     {
-        $this->countOfColumns = count($this->columns);
+        $this->countOfHeaders = count($this->headers);
     }
 
     private function readSingleRow(): array
