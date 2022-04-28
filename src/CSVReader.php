@@ -57,27 +57,42 @@ final class CSVReader
         $this->closeForRead($file);
     }
 
+    /**
+     * @return false|resource
+     */
     public function openFile(string $filePath)
     {
         return fopen($filePath, 'r');
     }
 
-    private function updateHeaders($file)
+    /**
+     * @param resource $file
+     */
+    private function updateHeaders($file): array
     {
         return $this->readSingleRow($file);
     }
 
+    /**
+     * @param array<string> $headers
+     */
     private function updateCountOfHeaders(array $headers): int
     {
         return count($headers);
     }
 
+    /**
+     * @param resource $file
+     */
     private function readSingleRow($file): array
     {
         return fgetcsv($file, null, self::SEPARATOR);
     }
 
-    private function closeForRead($file)
+    /**
+     * @param resource $file
+     */
+    private function closeForRead($file): void
     {
         fclose($file);
     }
