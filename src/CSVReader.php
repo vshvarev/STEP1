@@ -8,49 +8,43 @@ final class CSVReader
 {
     private const CHUNK_LENGTH = 3;
     private const SEPARATOR = ';';
-    private $file;
-    private array $headers;
-    private int $countOfHeaders;
 
-    public function __construct(string $filePath)
+    public function getRows(string $filePath): Generator
     {
-        $this->file = fopen($filePath, 'r');
-    }
+        $file = $this->openFile($filePath);
+        $headers = $this->updateHeaders($file);
+        $countOfHeaders = $this->updateCountOfHeaders($headers);
 
-    public function getRows(): Generator
-    {
-        $this->updateHeaders();
-        $this->updateCountOfHeaders();
-
-        while (!feof($this->file)) {
-            $rowInArray = $this->readSingleRow();
+        while (!feof($file)) {
+            $rowInArray = $this->readSingleRow($file);
             $row = new Row();
 
-            for ($i = 0; $i < $this->countOfHeaders; $i++) {
-                $field = new Field($this->getHeaders($i), $rowInArray[$i]);
+            for ($i = 0; $i < $countOfHeaders; $i++) {
+                $field = new Field($headers[$i], $rowInArray[$i]);
                 $row->setField($field);
             }
 
             yield $row;
         }
-        $this->closeForRead();
+        $this->closeForRead($file);
     }
 
-    public function getChunks(): Generator
+    public function getChunks(string $filePath): Generator
     {
-        $this->updateHeaders();
-        $this->updateCountOfHeaders();
+        $file = $this->openFile($filePath);
+        $headers = $this->updateHeaders($file);
+        $countOfHeaders = $this->updateCountOfHeaders($headers);
 
-        while (!feof($this->file)) {
+        while (!feof($file)) {
             $counter = 0;
             $chunk = [];
 
-            while ($counter < self::CHUNK_LENGTH && !feof($this->file)) {
-                $rowInArray = fgetcsv($this->file, null, self::SEPARATOR);
+            while ($counter < self::CHUNK_LENGTH && !feof($file)) {
+                $rowInArray = $this->readSingleRow($file);
                 $row = new Row();
 
-                for ($i = 0; $i < $this->countOfHeaders; $i++) {
-                    $field = new Field($this->getHeaders($i), $rowInArray[$i]);
+                for ($i = 0; $i < $countOfHeaders; $i++) {
+                    $field = new Field($headers[$i], $rowInArray[$i]);
                     $row->setField($field);
                 }
 
@@ -60,31 +54,31 @@ final class CSVReader
 
             yield $chunk;
         }
-        $this->closeForRead();
+        $this->closeForRead($file);
     }
 
-    private function updateHeaders()
+    public function openFile(string $filePath)
     {
-        $this->headers = $this->readSingleRow();
+        return fopen($filePath, 'r');
     }
 
-    private function getHeaders(int $id)
+    private function updateHeaders($file)
     {
-        return $this->headers[$id];
+        return $this->readSingleRow($file);
     }
 
-    private function updateCountOfHeaders()
+    private function updateCountOfHeaders(array $headers): int
     {
-        $this->countOfHeaders = count($this->headers);
+        return count($headers);
     }
 
-    private function readSingleRow(): array
+    private function readSingleRow($file): array
     {
-        return fgetcsv($this->file, null, self::SEPARATOR);
+        return fgetcsv($file, null, self::SEPARATOR);
     }
 
-    private function closeForRead()
+    private function closeForRead($file)
     {
-        fclose($this->file);
+        fclose($file);
     }
 }
