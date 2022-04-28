@@ -17,7 +17,7 @@ final class CSVReader
         $this->file = fopen($filePath, 'r');
     }
 
-    public function rows(): Generator
+    public function getRows(): Generator
     {
         $this->updateHeaders();
         $this->updateCountOfHeaders();
@@ -36,7 +36,7 @@ final class CSVReader
         $this->closeForRead();
     }
 
-    public function chunks(): Generator
+    public function getChunks(): Generator
     {
         $this->updateHeaders();
         $this->updateCountOfHeaders();
