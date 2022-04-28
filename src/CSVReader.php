@@ -55,27 +55,27 @@ class CSVReader
         $this->closeForRead();
     }
 
-    public function setColumns()
+    private function setColumns()
     {
         $this->columns = $this->readSingleRow();
     }
 
-    public function getColumns(int $id)
+    private function getColumns(int $id)
     {
         return $this->columns[$id];
     }
 
-    public function setCountOfColumns()
+    private function setCountOfColumns()
     {
         $this->countOfColumns = count($this->columns);
     }
 
-    public function readSingleRow(): array
+    private function readSingleRow(): array
     {
         return fgetcsv($this->file, null, self::SEPARATOR);
     }
 
-    public function closeForRead()
+    private function closeForRead()
     {
         fclose($this->file);
     }
