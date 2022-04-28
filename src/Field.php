@@ -4,18 +4,18 @@ namespace src;
 
 final class Field
 {
-    private mixed $key;
+    private mixed $header;
     private mixed $value;
 
     public function __construct(mixed $key, mixed $value)
     {
-        $this->key = $key;
+        $this->header = $key;
         $this->value = $value;
     }
 
-    public function getKey(): mixed
+    public function getHeader(): mixed
     {
-        return $this->key;
+        return $this->header;
     }
 
     public function getValue(): mixed
