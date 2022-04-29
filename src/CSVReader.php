@@ -15,14 +15,9 @@ final class CSVReader
         $headers = self::updateHeaders($file);
 
         while (self::endOfFileNotReached($file)) {
-            $rowInArray = self::readSingleRow($file);
-            $row = new Row();
+            $values = self::readSingleRow($file);
 
-            foreach ($rowInArray as $index => $value) {
-                $row->addCell(new Cell($headers[$index], $value));
-            }
-
-            yield $row;
+            yield self::createRow($headers, $values);
         }
         self::closeForRead($file);
     }
@@ -58,6 +53,15 @@ final class CSVReader
     private function updateHeaders($file): array
     {
         return self::readSingleRow($file);
+    }
+
+    private function createRow(array $headers, array $values): Row
+    {
+        $row = new Row();
+        for ($i = 0; $i < count($headers); $i++) {
+            $row->addCell(new Cell($headers[$i], $values[$i]));
+        }
+        return $row;
     }
 
     /**
