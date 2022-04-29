@@ -12,10 +12,10 @@ final class CSVReader
     public function getRows(string $filePath): Generator
     {
         $file = self::openFile($filePath);
-        $headers = $this->updateHeaders($file);
+        $headers = self::updateHeaders($file);
 
-        while ($this->endOfFileNotReached($file)) {
-            $rowInArray = $this->readSingleRow($file);
+        while (self::endOfFileNotReached($file)) {
+            $rowInArray = self::readSingleRow($file);
             $row = new Row();
 
             foreach ($rowInArray as $index => $value) {
@@ -32,7 +32,7 @@ final class CSVReader
         $chunkSize = self::validateChunkSize($chunkSize);
         $chunk = [];
 
-        foreach ($this->getRows($filePath) as $row) {
+        foreach (self::getRows($filePath) as $row) {
             $chunk[] = $row;
 
             if (count($chunk) >= $chunkSize) {
@@ -57,7 +57,7 @@ final class CSVReader
      */
     private function updateHeaders($file): array
     {
-        return $this->readSingleRow($file);
+        return self::readSingleRow($file);
     }
 
     /**
