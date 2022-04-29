@@ -27,7 +27,7 @@ final class CSVReader
         self::closeForRead($file);
     }
 
-    public function getChunks(string $filePath, $chunkSize): Generator
+    public function getChunks(string $filePath, int $chunkSize = self::DEFAULT_CHUNK_SIZE): Generator
     {
         $chunkSize = self::validateChunkSize($chunkSize);
         $chunk = [];
