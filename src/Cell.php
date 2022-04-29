@@ -4,14 +4,10 @@ namespace src;
 
 final class Cell
 {
-    private string $header;
-    private mixed $value;
-
-    public function __construct(string $header, mixed $value)
-    {
-        $this->header = $header;
-        $this->value = $value;
-    }
+    public function __construct(
+        private string $header,
+        private mixed $value,
+    ) {}
 
     public function getHeader(): string
     {

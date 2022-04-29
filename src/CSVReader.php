@@ -24,7 +24,7 @@ final class CSVReader
 
             yield $row;
         }
-        $this->closeForRead($file);
+        self::closeForRead($file);
     }
 
     public function getChunks(string $filePath, $chunkSize): Generator
